@@ -794,7 +794,7 @@ var GeoExplorer = Ext.extend(gxp.Viewer, {
         var addLayerButton = new Ext.Button({
             id: "worldmap_addlayers_button",
             disabled: false,
-            text: '<span class="x-btn-text">Papi que?</span>',
+            text: '<span class="x-btn-text">' + this.addLayersButtonText + '</span>',
             handler : this.showSearchWindow,
             scope: this
         });
@@ -1025,11 +1025,18 @@ var GeoExplorer = Ext.extend(gxp.Viewer, {
     },
 
     setWorldMapSourceKey : function() {
+        console.log('fn this.layerSources', this.layerSources);
         for (var id in this.layerSources) {
             source = this.layerSources[id];
-            if (source instanceof gxp.plugins.GeoNodeSource && source.url.replace(this.urlPortRegEx, "$1/").indexOf(
-                this.localGeoServerBaseUrl.replace(
-                    this.urlPortRegEx, "$1/")) === 0) {
+            console.log('source', source);
+            var isIninstanceofGeoNodeSource = (source instanceof gxp.plugins.GeoNodeSource);
+            console.log('isIninstanceofGeoNodeSource', isIninstanceofGeoNodeSource);
+            var checkWork = source.url.replace(this.urlPortRegEx, "$1/").indexOf(
+                this.localGeoServerBaseUrl.replace(this.urlPortRegEx, "$1/"));
+            console.log('checkWork: ', checkWork);
+            
+            if (isIninstanceofGeoNodeSource &&  === checkWork = 0) {
+                console.log('moto');
                 this.worldMapSourceKey = id;
             }
         }
@@ -1052,10 +1059,16 @@ var GeoExplorer = Ext.extend(gxp.Viewer, {
     },
 
     addWorldMapLayers: function(records) {
-        if (this.worldMapSourceKey == null)
+        console.log('records', records);
+        console.log('this.worldMapSourceKey: ', this.worldMapSourceKey );
+        console.log('this.layerSources', this.layerSources);
+        if (this.worldMapSourceKey == null) {
             this.setWorldMapSourceKey();
+        }
         var wmSource = this.layerSources[this.worldMapSourceKey];
+        console.log('wmSource', wmSource);
         if (wmSource) {
+            console.log('entra en el if');
             for (var i = 0; i < records.length; i++) {
                 var record = records[i];
                 // add an existing layers
@@ -2092,6 +2105,7 @@ var GeoExplorer = Ext.extend(gxp.Viewer, {
         this.searchTable.hookupSearchButtons('refine');
 
         var dataCart = new GeoNode.DataCart({
+            id: 'hola_mundo',
             store: this.searchTable.dataCart,
             renderTo: 'data_cart',
             addToMapButtonFunction: this.addWorldMapLayers,
