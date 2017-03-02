@@ -102,7 +102,6 @@ GeoNode.DataCart = Ext.extend(Ext.util.Observable, {
 
             addToMapButton.on('click', function() {
                 var layersArray = dataGrid.getSelectionModel().getSelections();
-                console.log('layersArray:', layersArray);
                 addToMapFunction.call(addToMapTarget, layersArray);
                 clearAll.call(dataCart);
             });
