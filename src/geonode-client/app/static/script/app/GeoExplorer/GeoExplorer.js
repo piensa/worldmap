@@ -2094,7 +2094,6 @@ var GeoExplorer = Ext.extend(gxp.Viewer, {
         this.searchTable.hookupSearchButtons('refine');
 
         var dataCart = new GeoNode.DataCart({
-            id: 'hola_mundo',
             store: this.searchTable.dataCart,
             renderTo: 'data_cart',
             addToMapButtonFunction: this.addWorldMapLayers,
